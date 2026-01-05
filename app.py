@@ -4,8 +4,11 @@ import os
 import google.generativeai as genai
 
 # إعداد مفتاح API (تأكد من استخدام مفتاحك الخاص)
-os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+if "GOOGLE_API_KEY" in st.secrets:
+    genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+else:
+    st.error("Missing API Key in Secrets!")
+
 # ملاحظة: إذا لم يعمل gemini-2.5-flash، جرب gemini-1.5-flash أو الموديلات المتاحة في حسابك
 model = genai.GenerativeModel('gemini-2.5-flash')
 
